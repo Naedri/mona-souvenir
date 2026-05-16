@@ -4,12 +4,20 @@ A modern web application to explore museum artworks, save favorites, and build p
 
 ## Features
 
-- [ ] Search artworks
+- [x] Search artworks
 - [ ] Artwork detail pages
 - [ ] User authentication
 - [ ] Persistent favorites
 - [ ] Responsive gallery UI
 - [ ] Search filters
+
+### Illustrations
+
+#### Search artworks
+
+<p>
+  <img alt="Search artworks - MET - tintin word" src="./assets/search-tintin.png" width="500">
+</p>
 
 ## Run Locally
 
