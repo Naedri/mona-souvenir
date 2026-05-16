@@ -1,6 +1,7 @@
-import { text, timestamp, uuid, unique } from "drizzle-orm/pg-core";
-import { createTable } from "./utils";
+import { text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+
 import { users } from "./auth";
+import { createTable } from "./utils";
 
 export const favorites = createTable(
   "favorites",
@@ -23,7 +24,11 @@ export const favorites = createTable(
       .defaultNow()
       .notNull()
   },
-  (table) => ({
-    uniqueFavorite: unique().on(table.userId, table.museum, table.artworkId)
-  })
+  (table) => [
+    unique("favorites_user_artwork_unique").on(
+      table.userId,
+      table.museum,
+      table.artworkId
+    )
+  ]
 );
