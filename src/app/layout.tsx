@@ -1,5 +1,7 @@
 import "./globals.css";
 
+import { Providers } from "./providers";
+
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
@@ -21,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
