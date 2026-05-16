@@ -1,29 +1,54 @@
-# Create T3 App
+# mona-souvenir
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern web application to explore museum artworks, save favorites, and build personal collections using public museum APIs such as the Louvre collections API.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- [ ] Search artworks
+- [ ] Artwork detail pages
+- [ ] User authentication
+- [ ] Persistent favorites
+- [ ] Responsive gallery UI
+- [ ] Search filters
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+| Layer                 | Selected Technology                       | Alternatives                   | Why This Choice                                                        |
+| --------------------- | ----------------------------------------- | ------------------------------ | ---------------------------------------------------------------------- |
+| Frontend Framework    | [Next.js](https://nextjs.org)             | Remix, Nuxt, SvelteKit         | Full-stack React ecosystem, routing, middleware, deployment simplicity |
+| Backend Communication | [tRPC](https://trpc.io)                   | REST, GraphQL                  | End-to-end TypeScript safety and simpler frontend/backend integration  |
+| Database              | [PostgreSQL](https://www.postgresql.org/) | MySQL, MongoDB                 | Reliable relational database for user data and favorites               |
+| ORM                   | [Drizzle](https://orm.drizzle.team)       | Prisma, TypeORM                | Lightweight, SQL-oriented, excellent TypeScript support                |
+| Authentication        | [Better Auth](https://better-auth.com/)   | Auth.js, Clerk                 | Modern self-hosted authentication with flexible architecture           |
+| UI Components         | [Kumo](https://kumo-ui.com/)              | shadcn/ui, MUI, Ant Design     | Modern composable React components without copy-paste architecture     |
+| Styling               | [Tailwind CSS](https://tailwindcss.com)   | Styled Components, CSS Modules | Fast UI development and consistent design system                       |
 
-## Learn More
+## Architecture
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```mmd
+flowchart TD
+    %% Actor Definitions
+    Frontend["Frontend\nNext.js + Kumo UI"]
+    BackendAPI["Backend API\ntRPC"]
+    DrizzleORM["Drizzle ORM"]
+    LouvreAPI["Louvre API\nMuseum APIs"]
+    PostgreSQL["PostgreSQL"]
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+    %% Relation Definitions
+    Frontend -->|tRPC| BackendAPI
+    BackendAPI --> DrizzleORM
+    BackendAPI --> LouvreAPI
+    DrizzleORM --> PostgreSQL
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Run Locally
 
-## How do I deploy this?
+1. Install a container manager (eg. `docker` or `podman`).
+2. Run :
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+git clone https://github.com/Naedri/mona-souvenir.git
+cd mona-souvenir
+cp .env.example .env
+docker compose up
+```
