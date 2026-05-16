@@ -11,11 +11,11 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { cache } from "react";
-
-import { headers } from "next/headers";
-
 import { auth } from "@/server/auth";
+
+interface CreateContextOptions {
+  headers: Headers;
+}
 
 /**
  * 1. CONTEXT
@@ -29,15 +29,15 @@ import { auth } from "@/server/auth";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = cache(async () => {
+export async function createTRPCContext({ headers }: CreateContextOptions) {
   const session = await auth.api.getSession({
-    headers: await headers()
+    headers
   });
 
   return {
     session
   };
-});
+}
 
 /**
  * 2. INITIALIZATION
@@ -46,18 +46,21 @@ export const createTRPCContext = cache(async () => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
-    return {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null
-      }
-    };
-  }
-});
+const t = initTRPC
+  .context<Awaited<ReturnType<typeof createTRPCContext>>>()
+  .create({
+    transformer: superjson,
+    errorFormatter({ shape, error }) {
+      return {
+        ...shape,
+        data: {
+          ...shape.data,
+          zodError:
+            error.cause instanceof ZodError ? error.cause.flatten() : null
+        }
+      };
+    }
+  });
 
 /**
  * Create a server-side caller.
