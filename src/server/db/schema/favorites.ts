@@ -18,6 +18,12 @@ export const favorites = createTable(
 
     artworkId: text("artwork_id").notNull(),
 
+    title: text("title").notNull(),
+
+    imageUrl: text("image_url"),
+
+    author: text("author"),
+
     createdAt: timestamp("created_at", {
       withTimezone: true
     })
