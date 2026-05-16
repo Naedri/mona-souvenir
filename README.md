@@ -96,6 +96,43 @@ src/server/services/museums/
 
 The rest of the application remains unchanged.
 
+### Saving a favorite
+
+Favorites are protected resources linked to authenticated users.
+
+```mermaid
+flowchart TD
+
+    UI["UI<br/>React / Next.js"]
+
+    TRPC["tRPC<br/>favorites router"]
+
+    AUTH["protectedProcedure<br/>Better Auth session"]
+
+    SERVICE["favorites.service<br/>Business Logic"]
+
+    REPOSITORY["favorites.repository<br/>Persistence Layer"]
+
+    DB["PostgreSQL<br/>Drizzle ORM"]
+
+    UI --> TRPC
+    TRPC --> AUTH
+    AUTH --> SERVICE
+    SERVICE --> REPOSITORY
+    REPOSITORY --> DB
+```
+
+The favorite flow is:
+
+```txt
+1 user clicks "favorite"
+2 tRPC mutation is called
+3 protectedProcedure validates session
+4 favorites.service orchestrates logic
+5 repository persists data
+6 PostgreSQL stores favorite
+```
+
 ## Run Locally
 
 1. Install a container manager (eg. `docker` or `podman`).
