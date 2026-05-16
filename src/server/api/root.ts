@@ -1,6 +1,7 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 import { healthRouter } from "@/server/api/routers/health";
-import { favoritesRouter } from "./routers/favorites";
+import { favoritesRouter } from "@/server/api/routers/favorites";
+import { museumsRouter } from "@/server/api/routers/museums";
 
 /**
  * This is the primary router for your server.
@@ -9,7 +10,8 @@ import { favoritesRouter } from "./routers/favorites";
  */
 export const appRouter = createTRPCRouter({
   health: healthRouter,
-  favorites: favoritesRouter
+  favorites: favoritesRouter,
+  museums: museumsRouter
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;
