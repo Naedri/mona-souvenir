@@ -41,6 +41,61 @@ flowchart TD
     DrizzleORM --> PostgreSQL
 ```
 
+### Adding another museum
+
+The application uses a provider-based architecture to isolate museum integrations from the rest of the system.
+
+This allows the frontend, tRPC routers, favorites system, and database layer to remain completely independent from any specific museum API.
+
+```mermaid
+flowchart TD
+
+    UI["UI<br/>React / Next.js"]
+
+    TRPC["tRPC<br/>Routers & Procedures"]
+
+    SERVICE["museum.service<br/>Business Orchestration"]
+
+    REGISTRY["provider registry<br/>museum-registry.ts"]
+
+    PROVIDER["museum provider<br/>e.g. LouvreProvider"]
+
+    API["external API<br/>e.g. Louvre API"]
+
+    UI --> TRPC
+    TRPC --> SERVICE
+    SERVICE --> REGISTRY
+    REGISTRY --> PROVIDER
+    PROVIDER --> API
+```
+
+Each museum integration implements the same `MuseumProvider` interface.
+
+This means adding a new museum only requires:
+
+```txt
+1 provider
+1 mapper
+1 client
+1 registry entry
+```
+
+Example:
+
+```txt
+src/server/services/museums/
+├── clients/
+│   └── met.client.ts
+├── mappers/
+│   └── met.mapper.ts
+├── providers/
+│   └── met.provider.ts
+└── registry/
+    └── museum-registry.ts
+```
+
+The rest of the application remains unchanged.
+
 ## Run Locally
 
 1. Install a container manager (eg. `docker` or `podman`).
