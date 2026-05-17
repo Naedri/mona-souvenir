@@ -11,6 +11,18 @@ A modern web application to explore museum artworks, save favorites, and build p
 - [ ] Responsive gallery UI
 - [ ] Search filters
 
+## Run Locally
+
+1. Install a container manager (eg. `docker` or `podman`).
+2. Run :
+
+```bash
+git clone https://github.com/Naedri/mona-souvenir.git
+cd mona-souvenir
+cp .env.example .env
+docker compose up
+```
+
 ## Tech Stack
 
 | Layer                 | Selected Technology                       | Alternatives                   | Why This Choice                                                        |
@@ -25,7 +37,7 @@ A modern web application to explore museum artworks, save favorites, and build p
 
 ## Architecture
 
-```mmd
+```mermaid
 flowchart TD
     %% Actor Definitions
     Frontend["Frontend\nNext.js + Kumo UI"]
@@ -48,7 +60,7 @@ The application uses a provider-based architecture to isolate museum integration
 This allows the frontend, tRPC routers, favorites system, and database layer to remain completely independent from any specific museum API.
 
 ```mermaid
-flowchart TD
+flowchart LR
 
     UI["UI<br/>React / Next.js"]
 
@@ -101,7 +113,7 @@ The rest of the application remains unchanged.
 Favorites are protected resources linked to authenticated users.
 
 ```mermaid
-flowchart TD
+flowchart LR
 
     UI["UI<br/>React / Next.js"]
 
@@ -124,23 +136,9 @@ flowchart TD
 
 The favorite flow is:
 
-```txt
-1 user clicks "favorite"
-2 tRPC mutation is called
-3 protectedProcedure validates session
-4 favorites.service orchestrates logic
-5 repository persists data
-6 PostgreSQL stores favorite
-```
-
-## Run Locally
-
-1. Install a container manager (eg. `docker` or `podman`).
-2. Run :
-
-```bash
-git clone https://github.com/Naedri/mona-souvenir.git
-cd mona-souvenir
-cp .env.example .env
-docker compose up
-```
+1. user clicks "favorite"
+2. tRPC mutation is called
+3. protectedProcedure validates session
+4. favorites.service orchestrates logic
+5. repository persists data
+6. PostgreSQL stores favorite
