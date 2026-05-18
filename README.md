@@ -1,5 +1,10 @@
 # mona-souvenir
 
+[![React](https://img.shields.io/badge/React-000?logo=react&logoColor=61DAFB)](https://react.dev/)
+[![tRPC](https://img.shields.io/badge/tRPC-000?logo=trpc&logoColor=2596BE)](https://trpc.io/)
+[![Drizzle](https://img.shields.io/badge/Drizzle-000?logo=drizzle&logoColor=C5F74F)](https://orm.drizzle.team/)
+[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+
 A modern web application to explore museum artworks, save favorites, and build personal collections using public museum APIs such as the Louvre collections API.
 
 ## Features
